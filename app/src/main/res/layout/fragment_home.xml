@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="android developer"
+        android:background="@color/colorPrimary"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_home_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="1dp"
+        android:layout_above="@+id/rg_bottom" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/rg_bottom"
+        android:background="@color/main_line"/>
+
+    <RadioGroup
+        android:id="@+id/rg_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/main_background">
+
+        <RadioButton
+            android:id="@+id/rb_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:drawableTop="@drawable/icon_home_home"
+            android:textColor="@color/home_tab_textcolor"
+            android:button="@null"
+            android:textSize="10sp"
+            android:gravity="center_horizontal"
+            android:text="首页"/>
+
+        <!--<RadioButton
+            android:id="@+id/rb_auction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:drawableTop="@drawable/icon_home_indiana"
+            android:textColor="@color/home_tab_textcolor"
+            android:button="@null"
+            android:textSize="10sp"
+            android:gravity="center_horizontal"
+            android:text="夺宝"/>-->
+
+        <RadioButton
+            android:id="@+id/rb_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:drawableTop="@drawable/icon_home_classification"
+            android:textColor="@color/home_tab_textcolor"
+            android:button="@null"
+            android:textSize="10sp"
+            android:gravity="center_horizontal"
+            android:text="分类"/>
+        <!--<RadioButton
+            android:id="@+id/rb_shopping_cart"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:drawableTop="@drawable/icon_home_shoppingcart"
+            android:textColor="@color/home_tab_textcolor"
+            android:button="@null"
+            android:layout_centerInParent="true"
+            android:textSize="10sp"
+            android:gravity="center_horizontal"
+            android:text="夺宝箱"/>-->
+        <RadioButton
+            android:id="@+id/rb_member"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:drawableTop="@drawable/icon_home_mine"
+            android:textColor="@color/home_tab_textcolor"
+            android:button="@null"
+            android:textSize="10sp"
+            android:gravity="center_horizontal"
+            android:text="我的"/>
+    </RadioGroup>
+
+</RelativeLayout>

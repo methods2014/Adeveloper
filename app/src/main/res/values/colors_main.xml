@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--本文件定义视觉规范中的颜色 均以main开头-->
+    <!--titleBar背景色-->
+    <color name="main_titlebar_background">#ffffff</color>
+    <!--正常背景色-->
+    <color name="main_background">#f0f0f0</color>
+    <!--黑按钮背景-->
+    <color name="main_black_btn">#666666</color>
+    <!--辅助字色-->
+    <color name="main_title">#333333</color>
+    <!--主色 按钮色 红-->
+    <color name="main_red">#ee4141</color>
+    <!--彩色底白字-->
+    <color name="main_text_white">#ffffff</color>
+    <!--提醒按钮色  绿-->
+    <color name="main_green">#48b978</color>
+    <!--正常字色-->
+    <color name="main_text">#666666</color>
+    <!--弱化 辅助信息-->
+    <color name="main_sub_text">#999999</color>
+    <!--不可交互 不可点击-->
+    <color name="main_disable">#bbbbbb</color>
+    <!--边框 分割线-->
+    <color name="main_line">#e3e3e3</color>
+    <!--竞拍打标-->
+    <color name="main_bidding_label">#06c5cc</color>
+    <!--一口价打标-->
+    <color name="main_fixedprice_label">#984ad4</color>
+
+    <!--以下为按钮色 红按钮-->
+    <!--正常-->
+    <color name="main_btn_red_normal">#ee4141</color>
+    <!--按下-->
+    <color name="main_btn_red_press">#e32929</color>
+
+    <!--以下为小按钮色 绿按钮-->
+    <!--正常-->
+    <color name="main_btn_green_normal">#48b978</color>
+    <!--按下-->
+    <color name="main_btn_green_press">#23ad5d</color>
+
+
+</resources>
