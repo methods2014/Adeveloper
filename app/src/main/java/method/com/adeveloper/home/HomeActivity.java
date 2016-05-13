@@ -1,19 +1,130 @@
 package method.com.adeveloper.home;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 
 import method.com.adeveloper.R;
 import method.com.adeveloper.base.BaseActivity;
+import method.com.adeveloper.view.VerticalScrollView;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private String TAG = this.getClass().getSimpleName();
+    RelativeLayout rl_home_container;
+    RadioButton rb_home;
+    RadioButton rb_category;
+    RadioButton rb_member;
+    FrameLayout fl_treasuer;
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    HomeFragment homeFragment;
+    CategoryFragment categoryFragment;
+    MineFragment mineFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_main);
+        setContentView(R.layout.activity_home);
+        fragmentManager = getSupportFragmentManager();
+        initView();
+        showHomeFragment(homeFragment);
+    }
+
+    private void initView(){
+        rl_home_container = (android.widget.RelativeLayout)findViewById(R.id.rl_home_container);
+        rb_home = (RadioButton) findViewById(R.id.rb_home);
+        rb_category = (RadioButton) findViewById(R.id.rb_category);
+        rb_member = (RadioButton) findViewById(R.id.rb_member);
+        fl_treasuer = (FrameLayout) findViewById(R.id.fl_treasuer);
+        initTreasureMessage();
+    }
+
+    /**
+     * 头条
+     */
+    private void initTreasureMessage() {
+        VerticalScrollView verticalScrollView = new VerticalScrollView(this);
+        fl_treasuer.addView(verticalScrollView);
+    }
+
+
+    private void hiddenFragment(FragmentTransaction fragmentTransaction){
+        if (homeFragment != null && !homeFragment.isHidden()) {
+            fragmentTransaction.hide(homeFragment);
+        }
+        if (categoryFragment != null && !categoryFragment.isHidden()) {
+            fragmentTransaction.hide(categoryFragment);
+        }
+        if (mineFragment != null && !mineFragment.isHidden()) {
+            fragmentTransaction.hide(mineFragment);
+        }
+    }
+
+    private void showHomeFragment(HomeFragment fragment){
+        fl_treasuer.setVisibility(View.VISIBLE);
+        if(null == fragment){
+            fragment = new HomeFragment();
+        }
+        fragmentTransaction = fragmentManager.beginTransaction();
+        hiddenFragment(fragmentTransaction);
+        if (!fragment.isAdded()) {
+            fragmentTransaction.add(R.id.rl_home_container, fragment);
+        } else {
+            fragmentTransaction.show(fragment);
+        }
+        fragmentTransaction.commit();
+    }
+
+    private void showCategoryFragment(CategoryFragment fragment){
+        fl_treasuer.setVisibility(View.GONE);
+        if(null == fragment){
+            fragment = new CategoryFragment();
+        }
+        fragmentTransaction = fragmentManager.beginTransaction();
+        hiddenFragment(fragmentTransaction);
+        if (!fragment.isAdded()) {
+            fragmentTransaction.add(R.id.rl_home_container, fragment);
+        } else {
+            fragmentTransaction.show(fragment);
+        }
+        fragmentTransaction.commit();
+    }
+
+    private void showMineFragment(MineFragment fragment){
+        fl_treasuer.setVisibility(View.GONE);
+        if(null == fragment){
+            fragment = new MineFragment();
+        }
+        fragmentTransaction = fragmentManager.beginTransaction();
+        hiddenFragment(fragmentTransaction);
+        if (!fragment.isAdded()) {
+            fragmentTransaction.add(R.id.rl_home_container, fragment);
+        } else {
+            fragmentTransaction.show(fragment);
+        }
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rb_home:
+                showHomeFragment(homeFragment);
+                break;
+            case R.id.rb_category:
+                showCategoryFragment(categoryFragment);
+                break;
+            case R.id.rb_member:
+                showMineFragment(mineFragment);
+                break;
+        }
     }
 
     /*@Override
@@ -60,8 +171,5 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 */
-    @Override
-    public void onClick(View v) {
 
-    }
 }

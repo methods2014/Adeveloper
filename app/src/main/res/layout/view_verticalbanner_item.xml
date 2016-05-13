@@ -9,13 +9,15 @@
         android:orientation="vertical"
         android:layout_gravity="center_vertical"
         android:paddingTop="10dp"
-        android:layout_height="55dp">
+        android:layout_height="55dp"
+        android:background="@drawable/shape_home_notice"
+        >
 
         <TextView
             android:id="@+id/text_header"
             android:layout_width="match_parent"
-            android:textSize="@dimen/textsize_24"
-            android:textColor="@color/color_333333"
+            android:textSize="12sp"
+            android:textColor="#333333"
             android:text=""
             android:singleLine="true"
             android:layout_height="wrap_content" />
@@ -34,7 +36,7 @@
                 android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
-                android:textSize="@dimen/textsize_18"
+                android:textSize="9sp"
                 android:background="@drawable/bg_text_red_shape"
                 android:text=""
                 android:gravity="center"
@@ -45,8 +47,8 @@
             <TextView
                 android:id="@+id/text_footer"
                 android:singleLine="true"
-                android:textSize="@dimen/textsize_24"
-                android:textColor="@color/color_ee4141"
+                android:textSize="12sp"
+                android:textColor="#ee4141"
                 android:layout_marginLeft="5dp"
                 android:text=""
                 android:layout_width="wrap_content"

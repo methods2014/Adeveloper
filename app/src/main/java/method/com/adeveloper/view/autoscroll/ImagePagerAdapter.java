@@ -1,20 +1,16 @@
-
+package method.com.adeveloper.view.autoscroll;
 
 /*
 * Copyright 2014 trinea.cn All right reserved. This software is the confidential and proprietary information of
 * trinea.cn ("Confidential Information"). You shall not disclose such Confidential Information and shall use it only in
 * accordance with the terms of the license agreement you entered into with trinea.cn.
 */
-package method.com.adeveloper.view.autoscroll;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.List;
-
-import method.com.adeveloper.home.adapter.RecyclingPagerAdapter;
 
 
 /**

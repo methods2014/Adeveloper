@@ -15,9 +15,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.jd.paipai.BuildConfig;
-import com.jd.paipai.R;
-import com.jd.paipai.utils.AndroidUtils;
+import method.com.adeveloper.BuildConfig;
+import method.com.adeveloper.R;
+import method.com.adeveloper.utils.AndroidUtils;
 
 
 /**

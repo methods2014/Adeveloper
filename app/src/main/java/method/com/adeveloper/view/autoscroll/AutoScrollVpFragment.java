@@ -9,22 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jd.paipai.BuildConfig;
-import com.jd.paipai.R;
-import com.jd.paipai.app.BaseFragment;
-import com.jd.paipai.entities.HomeBannerEntity;
-import com.jd.paipai.module.home.action.HomeBannerAction;
-import com.jd.paipai.module.home.action.OnDataEmptyCallback;
-import com.jd.paipai.module.home.adapter.ADViewPagerAdapter;
-import com.jd.paipai.utils.ADUtils;
-import com.jd.paipai.utils.DateUtils;
-
-import org.apache.commons.collections4.CollectionUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
+import method.com.adeveloper.BuildConfig;
+import method.com.adeveloper.R;
+import method.com.adeveloper.base.BaseFragment;
 
 /**
  * Created by wangs on 16/1/18 14:30.
@@ -34,8 +24,8 @@ import de.greenrobot.event.EventBus;
 public class AutoScrollVpFragment extends BaseFragment {
     private static String TAG = AutoScrollVpFragment.class.getSimpleName();
     private AutoScrollViewPagerWithIndicator autoScrollViewPager;
-    private ADViewPagerAdapter adViewPagerAdapter;
-    private List<HomeBannerEntity> adList = new ArrayList<>();
+    private ImagePagerAdapter adViewPagerAdapter;
+    private List<Integer> imageIdList;
 
     public static void showAtLocation(FragmentManager fm, int conRes, boolean isAdd) {
         AutoScrollVpFragment scrollVpFragment = new AutoScrollVpFragment();
@@ -45,9 +35,7 @@ public class AutoScrollVpFragment extends BaseFragment {
         } else {
             ft.replace(conRes, scrollVpFragment, TAG).addToBackStack(null).commit();
         }
-
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,9 +51,13 @@ public class AutoScrollVpFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        EventBus.getDefault().register(this);
         autoScrollViewPager = (AutoScrollViewPagerWithIndicator) view.findViewById(R.id.header_view_pager);
-        adViewPagerAdapter = new ADViewPagerAdapter(getActivity(), adList);
+        imageIdList = new ArrayList<>();
+        imageIdList.add(R.mipmap.banner_0);
+        imageIdList.add(R.mipmap.banner_1);
+        imageIdList.add(R.mipmap.banner_2);
+        imageIdList.add(R.mipmap.banner_3);
+        adViewPagerAdapter = new ImagePagerAdapter(getActivity(), imageIdList);
         AutoScrollViewPager viewPager = autoScrollViewPager.getViewPager();
         autoScrollViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -75,7 +67,7 @@ public class AutoScrollVpFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                autoScrollViewPager.selectIndicator(position % (adList.size()));
+                autoScrollViewPager.selectIndicator(position % (imageIdList.size()));
 
             }
 
@@ -87,7 +79,7 @@ public class AutoScrollVpFragment extends BaseFragment {
         viewPager.setInterval(2000);
         viewPager.setAutoScrollDurationFactor(3);
         autoScrollViewPager.setAdapter(adViewPagerAdapter);
-
+        showAdViewPager();
     }
 
     @Override
@@ -116,59 +108,11 @@ public class AutoScrollVpFragment extends BaseFragment {
         if (BuildConfig.DEBUG) Log.d(TAG, "onPause");
     }
 
-    public void onEventMainThread(HomeBannerAction action) {
-
-        if (BuildConfig.DEBUG) Log.d(TAG, "onEventMainThread start");
-        List<HomeBannerEntity> tempAdList = action.getEntityList();
-        OnDataEmptyCallback emptyCallback = action.getCallback();
-
-        if (tempAdList.isEmpty()) {
-            return;
-        }
-
-        List<HomeBannerEntity> retainList = new ArrayList<>();
-        for (HomeBannerEntity domain : tempAdList) {
-            if (DateUtils.todayAmongDays(domain.getStartTime(), domain.getEndTime())) {
-                if (ADUtils.getInstance(getActivity()).ADValidate(domain)) {
-                    retainList.add(domain);
-                }
-            }
-        }
-        if (retainList.isEmpty()) {
-
-            if (emptyCallback != null) {
-                emptyCallback.onDataEmpty(true);
-                AutoScrollViewPager viewPager = autoScrollViewPager.getViewPager();
-                if (viewPager != null) {
-                    viewPager.stopAutoScroll();
-                }
-            }
-            return;
-        } else {
-            if (emptyCallback != null) {
-                emptyCallback.onDataEmpty(false);
-            }
-        }
-
-        /**
-         * 当存在不相同的元素,继续执行
-         */
-        if (CollectionUtils.isEqualCollection(retainList, adList)) {
-            return;
-        }
-        adList.clear();
-        adList.addAll(retainList);
-        showAdViewPager();
-
-        if (BuildConfig.DEBUG) Log.d(TAG, "onEventMainThread end");
-    }
-
-
     private void showAdViewPager() {
         if (BuildConfig.DEBUG) Log.d(TAG, "showAdViewPager start");
-        if (!adList.isEmpty()) {
+        if (!imageIdList.isEmpty()) {
             adViewPagerAdapter.setInfiniteLoop(true);
-            autoScrollViewPager.initIndicator(adList.size());
+            autoScrollViewPager.initIndicator(imageIdList.size());
             AutoScrollViewPager viewPager = autoScrollViewPager.getViewPager();
             adViewPagerAdapter.notifyDataSetChanged();
             viewPager.stopAutoScroll();
@@ -181,7 +125,6 @@ public class AutoScrollVpFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
 }

@@ -1,6 +1,5 @@
 package method.com.adeveloper.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -16,26 +15,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import com.jd.paipai.R;
-import com.jd.paipai.entities.HomeTreasureMessageEntity;
-import com.jd.paipai.module.home.action.HomeTreasureMessageAction;
-import com.jd.paipai.module.home.action.OnDataEmptyCallback;
-import com.jd.paipai.module.launch.HtmlActivity;
-import com.jd.paipai.utils.DateUtils;
-import com.jd.paipai.utils.StatisticsUtils;
-
-import org.apache.commons.collections4.CollectionUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
+import method.com.adeveloper.R;
+import method.com.adeveloper.home.entity.HomeTreasureMessageEntity;
 
 /**
- * Created by wangs on 16/1/20 11:39.
  * 竖直滚动的广告条
  */
 public class VerticalScrollView extends FrameLayout {
+
     private static final String TAG = VerticalScrollView.class.getSimpleName();
     private Context mContext;
     private ViewSwitcher switcher;
@@ -51,9 +41,7 @@ public class VerticalScrollView extends FrameLayout {
     private boolean stopScrollWhenTouch = false;
     private boolean isAutoScroll = true;
     private boolean isStopByTouch = false;
-
     private static final int SCROLL_NEXT_ACTION = 0;
-    //    private static final int SCROLL_STOP_ACTION = 1;
     //动画时间
     public int animDuration = 1000;
     //滚动间隔
@@ -62,16 +50,11 @@ public class VerticalScrollView extends FrameLayout {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-//            Log.d("VerticalScrollView", "handleMessage: " + msg.what);
             switch (msg.what) {
                 case SCROLL_NEXT_ACTION:
                     next();
                     handler.sendEmptyMessageDelayed(SCROLL_NEXT_ACTION, scrollDuration);
                     break;
-//                case SCROLL_STOP_ACTION:
-//                    handler.removeMessages(SCROLL_NEXT_ACTION);
-//                    break;
-
             }
         }
     };
@@ -93,8 +76,6 @@ public class VerticalScrollView extends FrameLayout {
     }
 
     private void initView(final Context context) {
-
-        EventBus.getDefault().register(this);
         mContext = context;
         View view = View.inflate(mContext, R.layout.view_verticalbanner, null);
         addView(view);
@@ -114,58 +95,31 @@ public class VerticalScrollView extends FrameLayout {
         out.setInterpolator(new AccelerateInterpolator());
         switcher.setInAnimation(in);
         switcher.setOutAnimation(out);
-
-
-    }
-
-
-
-    public void onEventMainThread(HomeTreasureMessageAction action) {
-
-        List<HomeTreasureMessageEntity> list = action.getEntityList();
-        List<HomeTreasureMessageEntity> tempList = new ArrayList<>();
-        OnDataEmptyCallback callback = action.getCallback();
-        Log.d(TAG, "setData: " + list);
-
-        if (dataList == null) {
-            dataList = new ArrayList<>();
-        }
-
-
-        for (HomeTreasureMessageEntity entity : list) {
-            if (DateUtils.todayAmongDays(entity.getStartTime(), entity.getEndTime())) {
-                try {
-                    if (entity.isAdValidate()) {
-                        tempList.add(entity);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }
-
-        if (dataList.isEmpty() && tempList.isEmpty()) {
-            callback.onDataEmpty(true);
-            return;
-        } else {
-            callback.onDataEmpty(false);
-        }
-        if (CollectionUtils.isEqualCollection(dataList, tempList)) {
-            return;
-        } else {
-            dataList.clear();
-            dataList.addAll(tempList);
-        }
-
+        dataList = new ArrayList<>();
+        initData(dataList);
         if (dataList != null) {
             size = dataList.size();
         }
-
         showInitView();
-
         startAutoScroll();
+    }
 
+    private void initData(List<HomeTreasureMessageEntity> dataList){
+        HomeTreasureMessageEntity entity1 = new HomeTreasureMessageEntity();
+        entity1.setDbdSpecTag("新闻");
+        entity1.setDbdSpecTitle("android 7.0 将于今年发布!");
+        entity1.setDbdSpecslogin("感受黑客技术");
+        HomeTreasureMessageEntity entity2 = new HomeTreasureMessageEntity();
+        entity2.setDbdSpecTag("新鲜事");
+        entity2.setDbdSpecslogin("android developer have updater");
+        entity2.setDbdSpecTitle("fast more fast");
+        HomeTreasureMessageEntity entity3 = new HomeTreasureMessageEntity();
+        entity3.setDbdSpecTag("信息速递");
+        entity3.setDbdSpecTitle("百度魏则西事件背后, develper应该了解的三件事");
+        entity3.setDbdSpecslogin("公关有多么的重要");
+        dataList.add(entity1);
+        dataList.add(entity2);
+        dataList.add(entity3);
     }
 
     /**
@@ -174,8 +128,6 @@ public class VerticalScrollView extends FrameLayout {
 
     private void showInitView() {
         initItemView(switcher.getCurrentView());
-
-
     }
 
     private void startAutoScroll() {
@@ -204,7 +156,6 @@ public class VerticalScrollView extends FrameLayout {
     private void initItemView(View view) {
         if (dataList.size() < index) {
             return;
-
         }
         final HomeTreasureMessageEntity entity = dataList.get(index);
         text_header = (TextView) view.findViewById(R.id.text_header);
@@ -218,8 +169,7 @@ public class VerticalScrollView extends FrameLayout {
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                StatisticsUtils.sendClickData(entity.getClickTag());
-                HtmlActivity.launch((Activity) mContext, entity.getDbdSpecUrl(), entity.getDbdSpecTitle(), 0);
+                //HtmlActivity.launch((Activity) mContext, entity.getDbdSpecUrl(), entity.getDbdSpecTitle(), 0);
             }
         });
     }
@@ -236,8 +186,6 @@ public class VerticalScrollView extends FrameLayout {
                 startAutoScroll();
             }
         }
-
-
         return super.dispatchTouchEvent(ev);
     }
 
@@ -253,7 +201,5 @@ public class VerticalScrollView extends FrameLayout {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         stopAutoScroll();
-        EventBus.getDefault().unregister(this);
-
     }
 }
