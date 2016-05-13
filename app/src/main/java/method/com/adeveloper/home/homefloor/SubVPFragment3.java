@@ -19,7 +19,7 @@ public class SubVPFragment3 extends BaseFragment{
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view  = inflater.inflate(R.layout.fragment_sub_vp1, container, false);
+        View view  = inflater.inflate(R.layout.fragment_sub_vp3, container, false);
         return view;
     }
 }

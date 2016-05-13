@@ -14,28 +14,33 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import method.com.adeveloper.R;
 import method.com.adeveloper.base.BaseFragment;
+import method.com.adeveloper.home.ResizeViewPager;
 
 /**
  * Created by chen on 2016/5/12.
  * 首页下面那个viewPager切换页
+ * ViewPager自适应，要重新实现viewPager中的onMeasure()方法
+ * 其中子类LinerLayout也要有具体高度
+ *
  */
 public class HomeViewPagerFragment extends BaseFragment{
 
-    private ViewPager viewPager;//页卡内容
+    private ResizeViewPager viewPager;//页卡内容
     private ImageView imageView;// 动画图片
     private TextView textView1,textView2,textView3;
     private List<Fragment> fragmentList;// Tab页面列表
     private int offset = 0;// 动画图片偏移量
     private int currIndex = 0;// 当前页卡编号
     private int bmpW;// 动画图片宽度
-
+    SubVPFragment1 fragment1;
+    SubVPFragment2 fragment2;
+    SubVPFragment3 fragment3;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_home_bottom_viewpager, container, false);
@@ -45,14 +50,23 @@ public class HomeViewPagerFragment extends BaseFragment{
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     private void initViewPager(View view) {
-        viewPager= (ViewPager) view.findViewById(R.id.vPager);
+        viewPager= (ResizeViewPager) view.findViewById(R.id.vPager);
+        fragment1 = SubVPFragment1.getInstance();
+        fragment2 = SubVPFragment2.getInstance();
+        fragment3 = SubVPFragment3.getInstance();
+
         fragmentList = new ArrayList<>();
-        fragmentList.add(SubVPFragment1.getInstance());
-        fragmentList.add(SubVPFragment2.getInstance());
-        fragmentList.add(SubVPFragment3.getInstance());
-        //FragmentManager fm = getChildFragmentManager();
-        FragmentManager fm = getActivity().getSupportFragmentManager();
+        fragmentList.add(fragment1);
+        fragmentList.add(fragment2);
+        fragmentList.add(fragment3);
+        FragmentManager fm = getChildFragmentManager();
+        //FragmentManager fm = getActivity().getSupportFragmentManager();
         viewPager.setAdapter(new SubViewPagerAdapter(fm, fragmentList));
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
@@ -103,13 +117,9 @@ public class HomeViewPagerFragment extends BaseFragment{
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
         public void onPageScrollStateChanged(int arg0) {
-
-
         }
 
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-
         }
 
         public void onPageSelected(int arg0) {
@@ -118,7 +128,7 @@ public class HomeViewPagerFragment extends BaseFragment{
             animation.setFillAfter(true);// True:图片停在动画结束位置
             animation.setDuration(300);
             imageView.startAnimation(animation);
-            Toast.makeText(getActivity(), "您选择了"+ viewPager.getCurrentItem()+"页卡", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "您选择了"+ viewPager.getCurrentItem()+"页卡", Toast.LENGTH_SHORT).show();
         }
 
     }

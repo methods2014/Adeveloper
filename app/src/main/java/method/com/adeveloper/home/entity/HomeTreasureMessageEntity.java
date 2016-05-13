@@ -1,9 +1,11 @@
 package method.com.adeveloper.home.entity;
 
+import method.com.adeveloper.base.BaseEntity;
+
 /**
  * Created by wangs on 16/2/19 11:17.
  */
-public class HomeTreasureMessageEntity {
+public class HomeTreasureMessageEntity extends BaseEntity {
     //    "channel": "11",
 //            "clickTag": "JDdbd_201601312|6",
 //            "dbdSpecTag": "疯抢",

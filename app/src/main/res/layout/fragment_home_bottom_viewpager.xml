@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -16,7 +16,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1.0"
             android:gravity="center"
-            android:text=" @我"
+            android:text="MV*模式"
             android:textColor="#000000"
             android:textSize="20.0dip" />
 
@@ -26,7 +26,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1.0"
             android:gravity="center"
-            android:text="评论"
+            android:text="UML"
             android:textColor="#000000"
             android:textSize="20.0dip" />
 
@@ -36,7 +36,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1.0"
             android:gravity="center"
-            android:text="私信"
+            android:text="设计模式"
             android:textColor="#000000"
             android:textSize="20.0dip" />
     </LinearLayout>
@@ -48,12 +48,11 @@
         android:scaleType="matrix"
         android:src="@drawable/horizontal_line" />
 
-    <android.support.v4.view.ViewPager
+    <method.com.adeveloper.home.ResizeViewPager
         android:id="@+id/vPager"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1.0"
         android:background="#000000"
         android:flipInterval="30"
         android:persistentDrawingCache="animation" />

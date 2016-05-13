@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/main_background"
     android:orientation="vertical">
     <FrameLayout
@@ -12,8 +12,8 @@
     </FrameLayout>
 
     <fragment android:name="method.com.adeveloper.home.homefloor.HomeViewPagerFragment"
-              android:id="@+id/viewPager_id"
+              android:id="@+id/vp_bottom"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" />
+              android:layout_height="wrap_content" />
 
 </LinearLayout>
