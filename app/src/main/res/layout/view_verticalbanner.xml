@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="3dp"
-        android:textColor="#ee4141"
+        android:textColor="@color/main_text_white"
         android:text="每日头条:" />
 
     <ImageView

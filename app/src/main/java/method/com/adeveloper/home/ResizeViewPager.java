@@ -9,6 +9,7 @@ import android.view.View;
 
 /**
  * Created by chen on 2016/5/13.
+ * 可以自适应高度的viewPager
  */
 public class ResizeViewPager extends ViewPager{
     public ResizeViewPager(Context context) {

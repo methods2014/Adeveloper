@@ -119,7 +119,7 @@ public class VerticalScrollView extends FrameLayout {
         entity3.setDbdSpecslogin("公关有多么的重要");
         dataList.add(entity1);
         dataList.add(entity2);
-        dataList.add(entity3);
+        //dataList.add(entity3);
     }
 
     /**

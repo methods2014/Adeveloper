@@ -15,12 +15,15 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import method.com.adeveloper.R;
 import method.com.adeveloper.base.BaseFragment;
 import method.com.adeveloper.home.ResizeViewPager;
+import method.com.adeveloper.home.event.OnPageChangeEvent;
 
 /**
  * Created by chen on 2016/5/12.
@@ -128,7 +131,7 @@ public class HomeViewPagerFragment extends BaseFragment{
             animation.setFillAfter(true);// True:图片停在动画结束位置
             animation.setDuration(300);
             imageView.startAnimation(animation);
-            //Toast.makeText(getActivity(), "您选择了"+ viewPager.getCurrentItem()+"页卡", Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(new OnPageChangeEvent(bmpW*currIndex, bmpW*arg0));
         }
 
     }

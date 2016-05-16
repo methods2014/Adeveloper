@@ -44,6 +44,10 @@ public class SubVPFragment1 extends BaseFragment{
         list.add(new SubVP1Entity(desc1, R.mipmap.mvc));
         list.add(new SubVP1Entity(desc2, R.mipmap.mvp));
         list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
+        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
+        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
+        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
+        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
         return list;
     }
 

@@ -28,6 +28,9 @@ public class HomeFragment extends BaseFragment {
     private void initBanner(View view){
         View viewPagerContainer = view.findViewById(R.id.fl_autoscrollvp_container);
         AutoScrollVpFragment.showAtLocation(getChildFragmentManager(), viewPagerContainer.getId(), false);
+        viewPagerContainer.setFocusable(true);
+        viewPagerContainer.setFocusableInTouchMode(true);
+        viewPagerContainer.requestFocus();
     }
 
     @Override
