@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    >
+    <include layout="@layout/view_common_title"/>
+    <RelativeLayout
+        android:layout_marginTop="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f9f8f4"
+        android:id="@+id/rly_parent"
+        >
+
+        <RelativeLayout
+            android:id="@+id/rl_send_message"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_feedback_input"
+            >
+
+            <EditText
+                android:id="@+id/et_send_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="7dp"
+                android:layout_toLeftOf="@+id/btn_send"
+                android:background="@drawable/bg_grey_stroke_corner"
+                android:clickable="false"
+                android:gravity="center_vertical"
+                android:hint="请您记得留下联系方式"
+                android:textColor="#bbbbbb"
+                android:textSize="14dp" />
+            <Button
+                android:id="@+id/btn_send"
+                android:layout_width="65dp"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/btn_fb_sendmessage"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="发送"
+                android:textColor="@color/main_text_white"
+                android:visibility="visible" />
+
+            <!--</LinearLayout>-->
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_above="@id/rl_send_message"
+            android:background="@color/main_line"
+            />
+
+        <!--评论列表部分-->
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srf_reply_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/view_line">
+
+            <ListView
+                android:id="@+id/lv_reply_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/view_separate"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:cacheColorHint="@android:color/transparent"
+                android:choiceMode="none"
+                android:divider="@null"
+                android:headerDividersEnabled="false"
+                android:listSelector="@android:color/transparent"
+                android:transcriptMode="alwaysScroll"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </RelativeLayout>
+</LinearLayout>

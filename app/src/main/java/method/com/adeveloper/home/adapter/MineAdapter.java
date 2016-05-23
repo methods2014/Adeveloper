@@ -60,8 +60,10 @@ public class MineAdapter extends BaseAdapter {
         if(StringUtils.isNotBlank(entity.subTitle)) {
             holder.tv_sub_title.setText(entity.subTitle);
             holder.tv_sub_title.setVisibility(View.VISIBLE);
-        }else {
             holder.iv_right.setVisibility(View.GONE);
+        }else {
+            holder.tv_sub_title.setVisibility(View.GONE);
+            holder.iv_right.setVisibility(View.VISIBLE);
         }
         return convertView;
     }

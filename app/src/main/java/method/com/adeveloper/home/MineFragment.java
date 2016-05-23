@@ -1,5 +1,8 @@
 package method.com.adeveloper.home;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import method.com.adeveloper.R;
+import method.com.adeveloper.activities.WebViewActivity;
 import method.com.adeveloper.base.BaseFragment;
 import method.com.adeveloper.home.adapter.MineAdapter;
 import method.com.adeveloper.home.entity.MineMenuEntity;
+import method.com.adeveloper.mine.FeedBackActivity;
+import method.com.adeveloper.utils.Constants;
+import method.com.adeveloper.utils.DataCleanManager;
 
 /**
  * Created by chen on 2016/5/11.
@@ -26,6 +33,8 @@ public class MineFragment extends BaseFragment {
 
     ListView lv_content;
     List<MineMenuEntity> mineMenuEntityList;
+    MineAdapter mineAdapter;
+    MineMenuEntity clearCache;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
@@ -35,7 +44,7 @@ public class MineFragment extends BaseFragment {
         tv_mine.setBackgroundColor(getResources().getColor(R.color.main_red));
         lv_content.setBackgroundColor(getResources().getColor(R.color.main_background));
         mineMenuEntityList = getData();
-        MineAdapter mineAdapter = new MineAdapter(getActivity(), mineMenuEntityList);
+        mineAdapter = new MineAdapter(getActivity(), mineMenuEntityList);
         lv_content.setAdapter(mineAdapter);
         lv_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -48,35 +57,44 @@ public class MineFragment extends BaseFragment {
     }
 
     private List<MineMenuEntity> getData(){
-        MineMenuEntity about = new MineMenuEntity("关于", null) {
-            @Override
-            public void launch() {
-                Log.i(TAG, "go to about page!");
-            }
-        };
         MineMenuEntity feedback = new MineMenuEntity("意见反馈", null) {
             @Override
             public void launch() {
-                Log.i(TAG, "go to feedback page!");
+                FeedBackActivity.launch(getActivity(), 1000);
             }
         };
-        MineMenuEntity currentVersion = new MineMenuEntity("当前版本", null) {
+        MineMenuEntity currentVersion = new MineMenuEntity("当前版本", getVersion()) {
             @Override
             public void launch() {
                 Log.i(TAG, "go to currentVersion page!");
             }
         };
-        MineMenuEntity clearCache = new MineMenuEntity("清理缓存", null) {
+        clearCache = new MineMenuEntity("清理缓存", getCacheSize()) {
             @Override
             public void launch() {
-                Log.i(TAG, "go to clearCache page!");
+                showAlertDialog("", "清理缓存", "取消", "确定", true, true, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        cleanCache();
+                    }
+                });
+            }
+        };
+        MineMenuEntity about = new MineMenuEntity("关于", null) {
+            @Override
+            public void launch() {
+                WebViewActivity.launch(getActivity(), Constants.URL_MINE_ABOUT, "关于");
             }
         };
         List<MineMenuEntity> ret = new ArrayList<>();
-        ret.add(about);
         ret.add(feedback);
         ret.add(currentVersion);
         ret.add(clearCache);
+        ret.add(about);
         return ret;
     }
 
@@ -99,5 +117,69 @@ public class MineFragment extends BaseFragment {
         lv_content.setLayoutParams(params);
     }
 
+    /**
+     * 获取版本号
+     * @return 当前应用的版本号
+     */
+    private String getVersion() {
+        try {
+            PackageManager manager = getActivity().getPackageManager();
+            PackageInfo info = manager.getPackageInfo(getActivity().getPackageName(), 0);
+            String version = info.versionName;
+            return "V"+version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 
+    /**
+     * 获取缓存大小
+     *
+     * @return 缓存大小
+     */
+    private String getCacheSize() {
+        String result = "0.00M";
+        try {
+            String cache = DataCleanManager.getTotalCacheSize(getActivity());
+            if (!"0.0Byte".equals(cache) && !"0.00M".equals(cache)) {
+                result = cache;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 清理缓存
+     */
+    private void cleanCache() {
+        new AsyncTask<Integer, Integer, String>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected String doInBackground(Integer... integers) {
+                DataCleanManager.cleanApplicationData(getActivity().getApplicationContext());
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                clearCache.subTitle = "0.00MB";
+                mineAdapter.notifyDataSetChanged();
+                showToast("清理完成");
+            }
+        }.execute(0);
+    }
 }

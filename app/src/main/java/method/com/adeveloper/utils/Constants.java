@@ -12,4 +12,7 @@ public interface Constants {
     String URL_DESIGN_VISITOR_2 = "file:///android_asset/design_visitor_2.html";
     String URL_DESIGN_VISITOR_3 = "file:///android_asset/design_visitor_3.html";
     String URL_DESIGN_FACTORY = "file:///android_asset/design_factory.html";
+
+
+    String URL_MINE_ABOUT = "file:///android_asset/about.html"; //我的-关于
 }
