@@ -52,7 +52,7 @@ public class SubVP1Adapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         SubVP1Entity entity = (SubVP1Entity) getItem(position);
-        holder.iv_icon.setImageResource(entity.iconResId);
+        holder.iv_icon.setImageBitmap(entity.iconBitmap);
         holder.tv_desc.setText(entity.desc);
         return convertView;
     }

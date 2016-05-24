@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import method.com.adeveloper.R;
+import method.com.adeveloper.activities.WebViewActivity;
 import method.com.adeveloper.base.BaseFragment;
 import method.com.adeveloper.home.adapter.SubVP1Adapter;
 import method.com.adeveloper.home.entity.SubVP1Entity;
@@ -26,12 +28,20 @@ public class SubVPFragment1 extends BaseFragment{
     }
     ListView lv_content;
 
+    List<SubVP1Entity> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_sub_vp1, container, false);
         lv_content = (ListView) view.findViewById(R.id.lv_content);
-        lv_content.setAdapter(new SubVP1Adapter(getActivity(), initData()));
+        list = initData();
+        lv_content.setAdapter(new SubVP1Adapter(getActivity(), list));
+        lv_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                WebViewActivity.launch(getActivity(), list.get(position).url, "详情页");
+            }
+        });
         initListViewHeight();
         return view;
     }
@@ -41,13 +51,13 @@ public class SubVPFragment1 extends BaseFragment{
         String desc2 = "MVP设计架构";
         String desc3 = "MVVM是Model-View-ViewModel的简写。";
         List<SubVP1Entity> list = new ArrayList<>();
-        list.add(new SubVP1Entity(desc1, R.mipmap.mvc));
-        list.add(new SubVP1Entity(desc2, R.mipmap.mvp));
+/*        list.add(new SubVP1Entity(desc1, R.mipmap.mvc, Constants.URL_DESIGN_COMMAND));
+        list.add(new SubVP1Entity(desc2, R.mipmap.mvp, Constants.URL_DESIGN_FACTORY));
+        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm, Constants.URL_DESIGN_CHAINOFRESPONSIBILITY_1));
         list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
         list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
         list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
-        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
-        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
+        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));*/
         return list;
     }
 

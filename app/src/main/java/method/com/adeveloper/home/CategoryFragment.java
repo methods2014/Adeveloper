@@ -63,13 +63,13 @@ public class CategoryFragment extends BaseFragment {
         String desc2 = "MVP设计架构";
         String desc3 = "MVVM是Model-View-ViewModel的简写。";
         List<SubVP1Entity> list = new ArrayList<>();
-        list.add(new SubVP1Entity(desc1, R.mipmap.mvc));
+        /*list.add(new SubVP1Entity(desc1, R.mipmap.mvc));
         list.add(new SubVP1Entity(desc2, R.mipmap.mvp));
         list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
         list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
         list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
         list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
-        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
+        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));*/
         return list;
     }
 

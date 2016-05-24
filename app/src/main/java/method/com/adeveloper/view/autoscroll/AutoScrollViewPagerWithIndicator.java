@@ -188,10 +188,13 @@ public class AutoScrollViewPagerWithIndicator extends FrameLayout {
     protected void onRestoreInstanceState(Parcelable state) {
         try {
             if (!(state instanceof SavedState)) {
-                super.onRestoreInstanceState(state);
+                try {
+                    super.onRestoreInstanceState(state);
+                }catch (Exception e){
+                    state = null;
+                }
                 return;
             }
-
             SavedState ss = (SavedState) state;
             super.onRestoreInstanceState(ss.getSuperState());
             this.stateToSave = ss.stateToSave;
