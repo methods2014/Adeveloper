@@ -13,7 +13,8 @@
         android:text="ANDROID 中的 MVC MVP MVVM"
         android:textColor="@color/main_text_white"
         android:background="@color/main_bidding_label"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:visibility="gone"/>
     <ListView
         android:id="@+id/lv_content"
         android:layout_width="match_parent"

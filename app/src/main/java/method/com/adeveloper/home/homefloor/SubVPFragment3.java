@@ -40,7 +40,7 @@ public class SubVPFragment3 extends BaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_sub_vp3, container, false);
         lv_content = (ListView) view.findViewById(R.id.lv_content);
-        list = initData(Constants.DIR_DESIGN_LOVELION);
+        list = initData(Constants.DIR_ARCHITECTURE);
         lv_content.setAdapter(new SubVP1Adapter(getActivity(), list));
         lv_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

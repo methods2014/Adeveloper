@@ -10,12 +10,16 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import method.com.adeveloper.R;
 import method.com.adeveloper.activities.WebViewActivity;
 import method.com.adeveloper.base.BaseFragment;
 import method.com.adeveloper.home.adapter.SubVP1Adapter;
 import method.com.adeveloper.home.entity.SubVP1Entity;
+import method.com.adeveloper.utils.ArticleUtils;
+import method.com.adeveloper.utils.AssetsUtils;
+import method.com.adeveloper.utils.Constants;
 
 /**
  * Created by chen on 2016/5/12.
@@ -34,7 +38,7 @@ public class SubVPFragment1 extends BaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_sub_vp1, container, false);
         lv_content = (ListView) view.findViewById(R.id.lv_content);
-        list = initData();
+        list = initData(Constants.DIR_DESIGN_LOVELION);
         lv_content.setAdapter(new SubVP1Adapter(getActivity(), list));
         lv_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -46,18 +50,14 @@ public class SubVPFragment1 extends BaseFragment{
         return view;
     }
 
-    private List<SubVP1Entity> initData(){
-        String desc1 = "android 中MVC模式的运用方式";
-        String desc2 = "MVP设计架构";
-        String desc3 = "MVVM是Model-View-ViewModel的简写。";
+    private List<SubVP1Entity> initData(String parentDir){
+        Properties prop = AssetsUtils.loadProperties(getActivity(), parentDir + Constants.PROPERTIES_FILE_SUFFIX);
+        String itemValue = prop.getProperty(Constants.PROPERTIES_ITEM); //design_factory_1,design_factory_2,design_factory_3,design_factory_4
         List<SubVP1Entity> list = new ArrayList<>();
-/*        list.add(new SubVP1Entity(desc1, R.mipmap.mvc, Constants.URL_DESIGN_COMMAND));
-        list.add(new SubVP1Entity(desc2, R.mipmap.mvp, Constants.URL_DESIGN_FACTORY));
-        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm, Constants.URL_DESIGN_CHAINOFRESPONSIBILITY_1));
-        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
-        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
-        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));
-        list.add(new SubVP1Entity(desc3, R.mipmap.mvvm));*/
+        String[] items = itemValue.split(Constants.PROPERTIES_ITEM_SEPARATOR);
+        for(String item : items){ //item is design_factory_1
+            list.add(new SubVP1Entity(prop.getProperty(item), AssetsUtils.getBitmapFromAssets(getActivity(), ArticleUtils.getIconPath(item, parentDir)), ArticleUtils.getHtmlPath(item, parentDir)));
+        }
         return list;
     }
 

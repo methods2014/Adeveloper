@@ -20,6 +20,8 @@ public interface Constants {
 
     //design_lovelion 目录下
     String DIR_DESIGN_LOVELION = "design_lovelion/";
+    String DIR_UML = "uml/";
+    String DIR_ARCHITECTURE = "architecture/";
 
     //测试页面，默认页面
     String URL_DESIGN_DEFAULT = "file:///android_asset/test111.htm";
